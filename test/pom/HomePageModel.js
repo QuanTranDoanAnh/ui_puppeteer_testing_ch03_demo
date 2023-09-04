@@ -20,14 +20,12 @@ module.exports = class HomePageModel {
 
     async getStock(productName) {
         const productDiv = (await this.page.$x(`//a[text()="${productName}"]/../..`))[0];
-        const stockElement = (await productDiv.$x('./h6'))[0];
-        return await this.getInnerText(stockElement);
+        const stockElemenmt = (await productDiv.$x('./h6'))[0];
+        return await stockElemenmt.evaluate(e => e.innerText);
     }
 
     async switchToView(view) {
         const select = await this.page.$('#viewMode');
         await select.select(view);
     }
-
-    async getInnerText(el) { return await el.evaluate(el => el.innerText) }
 }

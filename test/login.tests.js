@@ -35,7 +35,7 @@ describe('Login Page', () => {
     it('Should login', async() => {
       await pageModel.login(config.username, config.password);
       await page.waitForSelector('.thumbnail.card');
-  });
+    });
 
     it('Should have the right title', async() => {
         (await pageModel.title()).should.equal('Login');
@@ -65,6 +65,12 @@ describe('Login Page', () => {
         
         await persistentBrowser.close();
         deleteFolderRecursive(userDataDir);
+    });
+
+    it('Should load image after login', async() => {
+      const promise = page.waitForResponse(config.productImage);
+      await pageModel.login(config.username, config.password);
+      await promise;
     });
 
     const deleteFolderRecursive = function(path) {

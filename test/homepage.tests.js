@@ -14,7 +14,6 @@ describe('Home Page', () => {
     
     before(async() => {
         browser = await puppeteer.launch(config.launchOptions);
-
     });
 
     beforeEach(async () => {
@@ -37,11 +36,6 @@ describe('Home Page', () => {
       (await pageModel.getStock(config.productToTestName)).should.equal('15 left in stock');
     });
 
-    it('Should load an image', async() => {
-      (await pageModel.getPrice(config.productToTestName)).should.equal('$1199');
-      (await pageModel.getStock(config.productToTestName)).should.equal('15 left in stock');
-    });
-
     it('Should switch views', async() => {
       await pageModel.switchToView('list');
       expect(await page.$$('.list-group-item')).not.to.be.empty;
@@ -49,4 +43,28 @@ describe('Home Page', () => {
       expect(await page.$$('.list-group-item')).to.be.empty;
     });
 
+    it('Should load all images', async() => {
+      const images = (await page.evaluateHandle(() => 
+        Array.from(document.querySelectorAll('IMG')).filter(e => !e.naturalWidth)));
+       (await images.evaluate(e => e.length)).should.equal(0);
+    });
+
+    const deleteFolderRecursive = function(path) {
+      try {
+        if (fs.existsSync(path)) {
+          fs.readdirSync(path).forEach((file, index) => {
+            const curPath = Path.join(path, file);
+            if (fs.lstatSync(curPath).isDirectory()) { // recurse
+              deleteFolderRecursive(curPath);
+            } else { // delete file
+              fs.unlinkSync(curPath);
+            }
+          });
+          fs.rmdirSync(path);
+        }
+      }
+      catch {
+        console.log('Unabled to delete folder');
+      }
+    };
 });
