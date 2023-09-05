@@ -20,7 +20,7 @@ jobs:
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
       run: npm install
     - name: Run Site Test Code
-      uses: mujo-code/puppeteer-headful@main
+      uses: mujo-code/puppeteer-headful@master
       env:
         TESTENV: 'CI'
         CI: 'true'
