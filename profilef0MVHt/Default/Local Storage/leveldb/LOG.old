@@ -1,6 +1,0 @@
-2023/09/04-22:34:41.804 2207 Reusing MANIFEST /Users/albertdev/Programming/ui_testing/ui_puppeteer_testing_ch03_demo/profilef0MVHt/Default/Local Storage/leveldb/MANIFEST-000001
-2023/09/04-22:34:41.805 2207 Recovering log #3
-2023/09/04-22:34:41.806 2207 Reusing old log /Users/albertdev/Programming/ui_testing/ui_puppeteer_testing_ch03_demo/profilef0MVHt/Default/Local Storage/leveldb/000003.log 
-2023/09/04-22:34:50.086 2207 Level-0 table #5: started
-2023/09/04-22:34:50.096 2207 Level-0 table #5: 37635 bytes OK
-2023/09/04-22:34:50.131 2207 Delete type=0 #3
