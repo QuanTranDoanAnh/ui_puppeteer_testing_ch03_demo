@@ -31,16 +31,17 @@ describe('Packpub search Test', () => {
 
     it('Should send geolocation', async () => {
         page.goto('https://www.packtpub.com/');
-        const search = await page.waitForSelector('#search');
+        const search = await page.waitForXPath("//div[@id='nav-collapse']/ul/li[4]/form/input").catch(e => console.log(e));
         await search.type('Puppeteer');
 
         await Promise.all([
             page.waitForNavigation(),
             search.press('Enter')
         ]);
-
-        const textResult = await page.$eval('[data-ui-id="page-title-wrapper"]', e => e.innerText);
-        expect(textResult).to.be.equal(`Search results for: 'Puppeteer'`);
+        
+        await page.waitForSelector('.product-card:nth-child(1) .product-title').catch(e => console.log(e));
+        const textResult = await page.$eval('.product-card:nth-child(1) .product-title', e => e.innerText);
+        expect(textResult).to.be.equal(`UI Testing with Puppeteer`);
 
     });
 
@@ -166,5 +167,5 @@ describe('Packpub search Test', () => {
         await page.click('#btn-minicart-close');
         await addToCartButtons[1].click();
         await reachedToTwo;
-    });
+    }); 
 });

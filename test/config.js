@@ -7,7 +7,7 @@ module.exports = ({
         productToTestId: 1,
         productImage: 'https://www.dropbox.com/s/swg9bdr0ejcbtrl/img9.jpg?raw=1',
         launchOptions: { headless: false,  defaultViewport: null },
-        timeout: 50000,
+        timeout: 50000
     },
     CI: {
         baseURL : 'http://localhost:8080/',
