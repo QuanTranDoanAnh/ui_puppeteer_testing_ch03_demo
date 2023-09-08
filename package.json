@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 30000 --reporter=list"
+    "test": "mocha --timeout 30000 ./test/socialTemplate.tests.js --reporter=list"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.8",
+    "differencify": "^1.5.5",
     "mocha": "^10.2.0",
     "puppeteer": "^21.1.1"
   }

@@ -1,11 +1,13 @@
 const puppeteer = require('puppeteer');
 const expect = require('chai').expect;
 const should = require('chai').should();
-const LoginPageModel = require('./pom/HomePageModel.js');
+const HomePageModel = require('./pom/HomePageModel.js');
 const config = require('./config');
 const fs = require('fs');
 var exec = require('child_process').exec;
 const Path = require('path');
+const Differencify = require('differencify');
+const differencify = new Differencify({ debug: true, mismatchThreshold: 0});
 
 describe('Home Page', () => {
     let browser;
@@ -19,7 +21,7 @@ describe('Home Page', () => {
     beforeEach(async () => {
         page = await browser.newPage();
         page.setDefaultTimeout(config.timeout);
-        pageModel = new LoginPageModel(page, config);
+        pageModel = new HomePageModel(page, config);
         await pageModel.go();
     })
 
@@ -47,6 +49,20 @@ describe('Home Page', () => {
       const images = (await page.evaluateHandle(() => 
         Array.from(document.querySelectorAll('IMG')).filter(e => !e.naturalWidth)));
        (await images.evaluate(e => e.length)).should.equal(0);
+    });
+
+    it('Should visually match', async() => {
+      const target = differencify.init({ chain: false, testName: 'Home'});
+      await target.launch();
+      const page = await target.newPage();
+      await page.setViewport({width: 1600, height: 1200});
+      await page.goto(config.baseURL);
+      const image = await target.screenshot();
+      const result = await target.toMatchSnapshot(image);
+      await page.close();
+      await target.close();
+
+      expect(result).to.be.true;
     });
 
     const deleteFolderRecursive = function(path) {
