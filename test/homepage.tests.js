@@ -52,17 +52,26 @@ describe('Home Page', () => {
     });
 
     it('Should visually match', async() => {
-      const target = differencify.init({ chain: false, testName: 'Home'});
-      await target.launch();
-      const page = await target.newPage();
-      await page.setViewport({width: 1600, height: 1200});
-      await page.goto(config.baseURL);
-      const image = await target.screenshot();
-      const result = await target.toMatchSnapshot(image);
-      await page.close();
-      await target.close();
+      for (const device of ['iPhone 6', 'iPad', 'iPad landscape', '']) {
+      
+        const target = differencify.init({ chain: false, testName: 'Home ' + device});
+        await target.launch();
+        const page = await target.newPage();
 
-      expect(result).to.be.true;
+        if (device) {
+          await page.emulate(puppeteer.devices[device]);
+        } else {
+          await page.setViewport({width: 1600, height: 1200});
+        }
+        
+        await page.goto(config.baseURL);
+        const image = await target.screenshot();
+        const result = await target.toMatchSnapshot(image);
+        await page.close();
+        await target.close();
+
+        expect(result).to.be.true;
+      }
     });
 
     const deleteFolderRecursive = function(path) {

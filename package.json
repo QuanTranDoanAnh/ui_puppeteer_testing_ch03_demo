@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 30000 ./test/socialTemplate.tests.js --reporter=list"
+    "test": "mocha --timeout 30000 ./test/wheretoeat.tests.js --reporter=list"
   },
   "keywords": [],
   "author": "",
